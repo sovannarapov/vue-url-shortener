@@ -2,7 +2,14 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@pages": ["pages"],
+      "@pages/*": ["pages/*"],
+      "@assets": ["assets"],
+      "@assets/*": ["assets/*"]
+    },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -10,5 +17,21 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "*.ts",
+    "**/*.ts",
+    "*.tsx",
+    "**/*.tsx",
+    "*.vue",
+    "**/*.vue",
+    "*.d.ts",
+    "components/**/*.ts",
+    "components/**/*.vue",
+    "layouts/**/*.ts",
+    "layouts/**/*.vue",
+    "pages/**/*.ts",
+    "pages/**/*.vue",
+    "plugins/**/*.ts",
+    "types/**/*.ts"
+  ]
 }

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
-import '@/assets/sass/main.scss';
-import App from './pages/index.vue';
+import '@assets/sass/main.scss';
+import App from './pages/app.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
