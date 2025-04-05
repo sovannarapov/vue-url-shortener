@@ -1,12 +1,28 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import UrlForm from '@/components/UrlForm.vue';
+import UrlService from '@/services/url.service.ts';
+import type { UrlFormData } from '@/domain/interface';
 
-const url = ref('');
 const shortUrl = ref('');
+const error = ref('');
+const loading = ref(false);
 
-const createUrl = () => {
-  console.log('Create the url...');
-};
+const service = new UrlService();
+
+async function createUrl(formData: UrlFormData) {
+  try {
+    loading.value = true;
+    error.value = '';
+    const { data } = await service.create(formData);
+    shortUrl.value = data.shortUrl;
+  } catch (err) {
+    error.value = 'Failed to create short URL. Please try again.';
+    console.error('Error creating URL:', err);
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
 
 <template>
@@ -16,53 +32,12 @@ const createUrl = () => {
         <header>
           <h3>URLShortener</h3>
         </header>
-        <form @submit.prevent="createUrl">
-          <fieldset>
-            <label for="url">
-              <font-awesome-icon icon="fa-solid fa-link" />
-              <span class="ml-1">Shorten a long URL</span>
-            </label>
-            <input
-              class="border-radius-10"
-              v-model="url"
-              id="url"
-              placeholder="Enter long link here"
-              required
-              type="text"
-            />
-          </fieldset>
-          <fieldset>
-            <label for="customize">
-              <font-awesome-icon icon="fa-solid fa-wand-magic-sparkles" />
-              <span class="ml-1">Customize your link</span>
-            </label>
-            <div class="grid">
-              <select
-                class="border-radius-10"
-                name="favorite-cuisine"
-                aria-label="Select your favorite cuisine..."
-                required
-              >
-                <option selected value="">urlshortener.com</option>
-              </select>
-              <input
-                class="border-radius-10"
-                v-model="url"
-                id="url"
-                placeholder="Enter alias"
-                required
-                type="text"
-              />
-            </div>
-          </fieldset>
-        </form>
-        <footer>
-          <input
-            type="submit"
-            value="Shorten URL"
-            class="border-radius-10 btn-green"
-          />
-        </footer>
+
+        <UrlForm @create-url="createUrl" />
+
+        <div v-if="error" role="alert" class="error">
+          {{ error }}
+        </div>
       </article>
       <div class="view-sell">
         <div class="view-sell-container">
@@ -105,9 +80,10 @@ const createUrl = () => {
         </div>
       </div>
     </div>
-    <div class="grid">
-      <div v-if="shortUrl">
-        <p>Shortened URL: {{ shortUrl }}</p>
+    <div class="grid" v-if="shortUrl">
+      <div class="result">
+        <p>Your shortened URL:</p>
+        <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
       </div>
     </div>
   </div>
