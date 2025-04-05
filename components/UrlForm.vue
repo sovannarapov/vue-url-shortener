@@ -9,6 +9,8 @@ const emit = defineEmits<{
 const url = ref('');
 const alias = ref('');
 
+const baseUrl = window.location.origin;
+
 async function formSubmit() {
   emit('createUrl', {
     url: url.value,
@@ -41,9 +43,9 @@ async function formSubmit() {
         <select
           class="border-radius-10"
           name="favorite-cuisine"
-          aria-label="Select your favorite cuisine..."
+          aria-label="Search for option"
         >
-          <option selected value="">urlshortener.com</option>
+          <option selected :value="baseUrl">{{ baseUrl }}</option>
         </select>
         <input
           v-model="alias"
