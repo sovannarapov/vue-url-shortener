@@ -11,3 +11,23 @@
   border-color: #1f8244;
   color: #fff;
 }
+
+.error {
+  color: #dc2626;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+}
+
+.result {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f0fdf4;
+  border-radius: 0.5rem;
+
+  a {
+    color: #1f8244;
+    word-break: break-all;
+  }
+}
